@@ -1,5 +1,4 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
-import { json } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -13,6 +12,7 @@ import type { LinksFunction } from "@vercel/remix";
 import { buildParams, fetchApi } from "./lib/fetchApi";
 import TierList from "./components/TierList";
 import NavBar from "./components/NavBar";
+import { json } from '@vercel/remix';
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),

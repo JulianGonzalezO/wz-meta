@@ -1,4 +1,4 @@
-import { json, type MetaFunction } from "@remix-run/node";
+import { type MetaFunction } from "@vercel/remix";
 import '../root.css'
 
 export const meta: MetaFunction = () => {
