@@ -37,12 +37,14 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <NavBar />
-        <div style={{ display: 'flex', gap: 10 }}>
-          <TierList />
-          <Outlet />
+        <div className="container">
+          <NavBar />
+          <div className="content" style={{ display: 'flex', gap: 10 }}>
+            <TierList />
+            <Outlet />
+          </div>
+          <ScrollRestoration />
         </div>
-        <ScrollRestoration />
         <Scripts />
         <LiveReload />
         <Analytics />

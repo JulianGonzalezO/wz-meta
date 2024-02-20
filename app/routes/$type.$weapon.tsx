@@ -20,7 +20,7 @@ export default function Contact() {
         />
         <h3>{weaponInfo.name}</h3>
       </div>
-      <div className="builds">
+      <div className="builds scrollbar">
         {builds
           .sort((a, b) => a.position - b.position)
           .sort((a, b) => type === 'mwz' && getIsZombie(a) ? -1 : 0)
@@ -43,18 +43,7 @@ const Build = ({ build }) => {
         <h4>{build.playstyle} {isBest && !isZombie && "*"}{isZombie && "🧟"}</h4>
         <img alt={build.type} src={`https://wzstats.gg/assets/img/${build.type}-logo.webp`} />
       </div>
-      {/* <WeaponGrid2 build={build} /> */}
       <WeaponGrid3 build={build} />
-      {/* <div className="attachments">
-        {attachments
-          .sort((a, b) => a[0].localeCompare(b[0]))
-          .map(([key, value]) => (
-          <div key={key} className="attachment">
-            <h5>{key}</h5>
-            <span>{value.name}</span>
-          </div>
-        ))}
-      </div> */}
     </div>
   )
 }
@@ -71,6 +60,9 @@ const WeaponGrid3 = ({ build }) => {
           data-empty={!build[slot]}
         >
           <h5>{slot}</h5>
+          {/* <svg viewBox={`0 0 ${slot === 'aftermarketParts' ? 500 : 260} 18`}>
+            <text x="0" y="15">{build[slot]?.name?.toUpperCase()}</text>
+          </svg> */}
           <span>{build[slot]?.name?.toUpperCase()}</span>
         </div>
       ))}
