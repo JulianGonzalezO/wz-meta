@@ -1,6 +1,6 @@
 import { NavLink, useLoaderData, useNavigate, useParams } from '@remix-run/react';
-import React, { useEffect, useState } from 'react'
-import { gameModes } from '~/lib/constants'
+import { useEffect } from 'react'
+import { gameModes, gameModesOrder } from '~/lib/constants'
 
 const NavBar = () => {
   const { type, weapon } = useParams()
@@ -17,6 +17,7 @@ const NavBar = () => {
     <div className="tabs">
       {Object.entries(data.wzStatsTierList)
         .filter(([key, value]) => typeof value === "object" && !key.includes('2'))
+        .sort((a, b) => gameModesOrder[a[0]] - gameModesOrder[b[0]])
         .map(([key]) => (
           <NavLink
             to={`${key}/${weapon || ''}`}

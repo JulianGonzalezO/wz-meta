@@ -10,6 +10,15 @@ export const gameModes: { [K in string]: string } = {
   mwz: "Zombies",
 }
 
+export const gameModesOrder: { [K in string]: number } = {
+  ashikaIsland: 1,
+  rankedResurgence: 2,
+  alMazrah: 3,
+  mw3: 4,
+  mw3Ranked: 5,
+  mwz: 6,
+}
+
 export const slots = [
   'muzzle',
   'barrel',

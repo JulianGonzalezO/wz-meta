@@ -5,10 +5,14 @@ function _entries(object = {}) {
   return Object.entries(object)
 }
 
+function removeDuplicates(array: Array<string>) {
+  return array.filter((value, index) => array.indexOf(value) === index)
+}
+
 const TierList = () => {
   const { type, weapon } = useParams()
   const navigate = useNavigate()
-  const { data } = useLoaderData();
+  const { data, attachments } = useLoaderData();
 
   useEffect(() => {
     if (type && !weapon) {
@@ -20,6 +24,12 @@ const TierList = () => {
   const tier = data.wzStatsTierList[type]
   
   const [filter, setFilter] = useState('')
+
+  const filterMW3Ranked = (weapon) => {
+    if (type !== 'mw3Ranked') return true
+    const builds = attachments.builds.filter((build) => build.weaponId === weapon && build.isMW3RankedBestBuild);
+    return builds.length > 0
+  }
   
   return (
     <div className="side__list">
@@ -30,8 +40,9 @@ const TierList = () => {
             <div key={key2} className="tier">
               <h2>{key2}</h2>
               <nav className="weapons--side">
-                {value2
+                {removeDuplicates(value2)
                   .filter(value3 => !filter || value3.includes(filter))
+                  .filter(filterMW3Ranked)
                   .map((value3) => (
                     <WeaponShort
                       key={value3}
@@ -51,7 +62,6 @@ const WeaponShort = ({ weapon }) => {
   const { type, weapon: selectedWeapon } = useParams()
   const { data } = useLoaderData();
   const weaponInfo = data.weapons.find((item) => item.id === weapon)
-console.log();
 
   return (
     <NavLink
@@ -68,6 +78,11 @@ console.log();
         />
         <h3>{weaponInfo.name}</h3>
         <h5>{weaponTypes[weaponInfo.type] || weaponInfo.type}</h5>
+        <img
+          alt={weaponInfo.game}
+          // src={`https://imagedelivery.net/BN5t48p9frV5wW3Jpe6Ujw/${weapon}-bold/gunDisplayLoadouts`}
+          src={`/images/${weaponInfo.game}-logo.webp`}
+        />
       </div>
     </NavLink>
   );
@@ -76,6 +91,7 @@ console.log();
 const weaponTypes = {
   ASSAULT_RIFLE: 'AR',
   BATTLE_RIFLE: 'BR',
+  MARKSMAN_RIFLE: 'MARKSMAN',
   SNIPER_RIFLE: 'SNIPER',
 }
 export default TierList
