@@ -1,0 +1,90 @@
+.tier__list {
+  overflow: auto;
+  padding-right: 5px;
+}
+.tier {
+
+}
+.tier:not(:has(.weapon)) {
+  display: none;
+}
+
+.side__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: auto;
+}
+.side__list input {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  outline: none;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+
+.weapons--side {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.weapons--side .weapon {
+  font-size: 14px;
+  background-color: transparent;
+  border: 1px solid #FF434F;
+}
+
+.weapons--side .weapon[data-game='mw2'] {
+  border: 1px solid #43ff98;
+}
+
+.weapons--side .weapon__title {
+  display: grid;
+  grid-template-areas:
+    'img title title'
+    'img type game';
+  grid-template-columns: auto 1fr;
+  row-gap: 0;
+}
+
+.weapons--side .weapon__title img {
+  grid-area: img;
+}
+
+.weapons--side .weapon__title img:nth-of-type(2) {
+  height: 15px;
+  grid-area: game;
+}
+
+.weapons--side .weapon__title h3 {
+  grid-area: title;
+  text-align: left;
+}
+
+.weapons--side .weapon h5 {
+  grid-area: type;
+  font-size: 10px;
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: 800;
+  background: rgba(255, 255, 255, 0.3);
+  width: min-content;
+  border-radius: 4px;
+  padding: 0 4px;
+}
+.weapons--side .weapon.active {
+  background-color: #ff434f66;
+}
+
+.weapons--side .weapon.active[data-game='mw2'] {
+  background-color: #43ffc066;
+}
+
+@media screen and (max-width: 600px) {
+  .side__list[data-active=true] {
+    height: 0;
+  }
+}

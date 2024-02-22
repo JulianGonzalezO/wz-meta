@@ -1,5 +1,7 @@
 import { NavLink, useLoaderData, useNavigate, useParams } from "@remix-run/react";
 import { useEffect, useState } from "react";
+import './TierList.css'
+import { weaponTypes } from "~/lib/constants";
 
 function _entries(object = {}) {
   return Object.entries(object)
@@ -17,7 +19,7 @@ const TierList = () => {
   useEffect(() => {
     if (type && !weapon) {
       const firstWeapon = data.wzStatsTierList[type].META[0]
-      navigate(`${type}/${firstWeapon}`)
+      // navigate(`${type}/${firstWeapon}`)
     }
   }, [weapon, type])
 
@@ -32,7 +34,7 @@ const TierList = () => {
   }
   
   return (
-    <div className="side__list">
+    <div className="side__list" data-active={!!weapon}>
       <input value={filter} placeholder="Search..." onChange={(e) => setFilter(e.target.value)} />
       <div className="tier__list scrollbar">
         {_entries(tier)
@@ -73,14 +75,12 @@ const WeaponShort = ({ weapon }) => {
       <div className="weapon__title">
         <img
           alt={weapon}
-          // src={`https://imagedelivery.net/BN5t48p9frV5wW3Jpe6Ujw/${weapon}-bold/gunDisplayLoadouts`}
           src={`/images/${weapon}.png`}
         />
         <h3>{weaponInfo.name}</h3>
         <h5>{weaponTypes[weaponInfo.type] || weaponInfo.type}</h5>
         <img
           alt={weaponInfo.game}
-          // src={`https://imagedelivery.net/BN5t48p9frV5wW3Jpe6Ujw/${weapon}-bold/gunDisplayLoadouts`}
           src={`/images/${weaponInfo.game}-logo.webp`}
         />
       </div>
@@ -88,10 +88,4 @@ const WeaponShort = ({ weapon }) => {
   );
 }
 
-const weaponTypes = {
-  ASSAULT_RIFLE: 'AR',
-  BATTLE_RIFLE: 'BR',
-  MARKSMAN_RIFLE: 'MARKSMAN',
-  SNIPER_RIFLE: 'SNIPER',
-}
 export default TierList

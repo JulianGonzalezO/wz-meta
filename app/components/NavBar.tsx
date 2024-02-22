@@ -1,11 +1,12 @@
 import { NavLink, useLoaderData, useNavigate, useParams } from '@remix-run/react';
 import { useEffect } from 'react'
 import { gameModes, gameModesOrder } from '~/lib/constants'
+import './NavBar.css'
 
 const NavBar = () => {
   const { type, weapon } = useParams()
   const navigate = useNavigate()
-  const { data } = useLoaderData();
+  const { data } = useLoaderData()
 
   useEffect(() => {
     if (!type) {

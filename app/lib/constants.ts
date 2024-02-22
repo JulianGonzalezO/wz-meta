@@ -1,12 +1,12 @@
 
 export const gameModes: { [K in string]: string } = {
   ashikaIsland: "Resurgence",
-  rankedResurgence: "Ranked Resurgence",
+  rankedResurgence: "Ranked",
   alMazrah: "Battle Royale",
   mw2Ranked: "MW2 Ranked",
   wz2Ranked: "WZ2 Ranked",
   mw3: "MW3",
-  mw3Ranked: "MW3 Ranked",
+  mw3Ranked: "Ranked",
   mwz: "Zombies",
 }
 
@@ -32,3 +32,10 @@ export const slots = [
   'rearGrip',
   'aftermarketParts',
 ]
+
+export const weaponTypes = {
+  ASSAULT_RIFLE: 'AR',
+  BATTLE_RIFLE: 'BR',
+  MARKSMAN_RIFLE: 'MARKSMAN',
+  SNIPER_RIFLE: 'SNIPER',
+}

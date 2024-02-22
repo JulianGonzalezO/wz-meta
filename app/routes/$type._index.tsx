@@ -2,6 +2,6 @@
 export default function Index() {
   
   return (
-    <span>Select a weapon</span>
+    <span style={{ gridArea: 'main' }}></span>
   )
 }

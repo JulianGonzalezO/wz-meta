@@ -1,0 +1,32 @@
+.attachment {
+  background-color: rgba(0, 0, 0, 0.4);
+  font-size: 12px;
+  border-radius: 4px;
+  padding: 5px;
+  border: 1px solid rgb(250, 169, 76);
+  color: rgb(250, 169, 76);
+  font-weight: bold;
+}
+.attachment svg {
+  fill: rgb(250, 169, 76);
+}
+.attachment[data-empty=true] {
+  opacity: 0.1;
+}
+.attachment h5 {
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: white;
+}
+
+@media screen and (max-width: 1024px) {
+  .attachment {
+    font-size: 10px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .attachment {
+    font-size: 8px;
+  }
+}

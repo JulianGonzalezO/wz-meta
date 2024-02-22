@@ -1,5 +1,6 @@
 import { useNavigate, useParams, useRouteLoaderData } from "@remix-run/react";
 import { useEffect, useState } from "react";
+import Attachment from "~/components/Attachment";
 import { slots } from "~/lib/constants";
 
 const getIsZombie = (build) => build.isMW3ZombieBestBuild
@@ -47,8 +48,13 @@ export default function Contact() {
       navigate(`/${type}`)
     }
   }, [builds])
+
   const tier = Object.keys(data.wzStatsTierList[type])
     .find(key => data.wzStatsTierList[type][key].includes(weapon))
+  
+  const onClose = () => {
+    navigate(`/${type}`)
+  }
 
   return (
     <div className="weapon">
@@ -59,6 +65,7 @@ export default function Contact() {
         />
         <h3>{weaponInfo.name}</h3>
         <span>Tier {tier}</span>
+        <span className="close" onClick={onClose}></span>
       </div>
       <div className="builds scrollbar">
         {builds
@@ -67,7 +74,7 @@ export default function Contact() {
           .sort(sortMW3Multi)
           .sort((a, b) => type === 'mwz' && getIsZombie(a) ? -1 : 0)
           .map((build) => (
-            <Build key={build.id} build={build} weaponInfo={weaponInfo} />
+            <Build key={build.id} build={build} />
           ))}
       </div>
     </div>
@@ -91,28 +98,16 @@ const Build = ({ build }) => {
         <img alt={build.type} src={`/images/${build.type}-logo.webp`} />
         {build.isAshikaBuild && <img src="/images/ashika.webp" />}
       </div>
-      <WeaponGrid3 build={build} />
+      <AttachmentsGrid build={build} />
     </div>
   )
 }
 
-
-const WeaponGrid3 = ({ build }) => {
+const AttachmentsGrid = ({ build }) => {
   return (
     <div className="weapon__grid">
       {slots.map((slot) => (
-        <div
-          key={slot}
-          style={{ gridArea: slot }}
-          className="attachment"
-          data-empty={!build[slot]}
-        >
-          <h5>{slot}</h5>
-          {/* <svg viewBox={`0 0 ${slot === 'aftermarketParts' ? 500 : 260} 18`}>
-            <text x="0" y="15">{build[slot]?.name?.toUpperCase()}</text>
-          </svg> */}
-          <span>{build[slot]?.name?.toUpperCase()}</span>
-        </div>
+        <Attachment key={slot} attachment={build[slot]} slot={slot} />
       ))}
     </div>
   )
