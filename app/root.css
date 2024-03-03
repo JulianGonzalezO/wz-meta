@@ -25,6 +25,7 @@ h3, h5 {
   grid-template-areas:
     'nav main'
     'side main';
+  grid-template-columns: 270px;
   grid-template-rows: auto 1fr;
   gap: 10px;
   margin: 0 auto;
@@ -155,6 +156,7 @@ h3, h5 {
   .content {
     width: 100%;
     grid-template-areas: 'nav' 'side' 'main';
+    grid-template-columns: auto;
     grid-template-rows: auto auto 1fr;
   }
 

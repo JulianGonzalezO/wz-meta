@@ -17,9 +17,9 @@ const TierList = () => {
   const { data, attachments } = useLoaderData();
 
   useEffect(() => {
-    if (type && !weapon) {
+    if (type && !weapon && window.innerWidth > 600) {
       const firstWeapon = data.wzStatsTierList[type].META[0]
-      // navigate(`${type}/${firstWeapon}`)
+      navigate(`${type}/${firstWeapon}`)
     }
   }, [weapon, type])
 
