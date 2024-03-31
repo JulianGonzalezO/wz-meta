@@ -11,9 +11,9 @@ import { Analytics } from "@vercel/analytics/react";
 import type { LinksFunction } from "@vercel/remix";
 import { buildParams, fetchApi } from "./lib/fetchApi";
 import TierList from "./components/TierList";
-import NavBar from "./components/NavBar";
 import { json } from '@vercel/remix';
 import NavBar2 from "./components/NavBar2";
+import { SpeedInsights } from '@vercel/speed-insights/remix';
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -39,7 +39,6 @@ export default function App() {
       </head>
       <body>
         <div className="container">
-          {/* <NavBar /> */}
           <div className="content">
             <NavBar2 />
             <TierList />
@@ -50,6 +49,7 @@ export default function App() {
         <Scripts />
         <LiveReload />
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
