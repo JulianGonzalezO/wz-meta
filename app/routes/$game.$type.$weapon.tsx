@@ -3,7 +3,17 @@ import { useEffect, useState } from "react";
 import Attachment from "~/components/Attachment";
 import { slots } from "~/lib/constants";
 
-const getIsZombie = (build) => build.isMW3ZombieBestBuild
+type Attachments = {
+  builds: Array<Build>
+}
+
+type Build = {
+  weaponId: string
+  isMW3ZombieBestBuild: boolean
+  isMW3RankedBestBuild: boolean
+}
+
+const getIsZombie = (build: Build) => build.isMW3ZombieBestBuild
 
 const sortWarzone = (a, b) => {
   if (a.type === 'wz2' && b.type === 'wz2') {
@@ -16,7 +26,7 @@ const sortWarzone = (a, b) => {
 
 export default function Contact() {
   const navigate = useNavigate()
-  const { weapon, type } = useParams()
+  const { game, weapon, type } = useParams()
   const { data, attachments } = useRouteLoaderData("root");
   const [isExpanded, setIsExpanded] = useState(true)
 
@@ -30,22 +40,22 @@ export default function Contact() {
       return -1
     }
   }
-  const filterZombies = (build) =>
+  const filterZombies = (build: Build) =>
    (type !== 'mwz' && !build.isMW3ZombieBestBuild)
    || (type === 'mwz' && build.isMW3ZombieBestBuild)
 
-  const filterMW3Ranked = (build) =>
+  const filterMW3Ranked = (build: Build) =>
     (type !== 'mw3Ranked' && !build.isMW3RankedBestBuild)
     || (type === 'mw3Ranked' && build.isMW3RankedBestBuild)
 
   const builds = attachments.builds
-    .filter((build) => build.weaponId === weapon)
+    .filter((build: Build) => build.weaponId === weapon)
     .filter(filterZombies)
     .filter(filterMW3Ranked)
 
   useEffect(() => {
     if (builds.length === 0) {
-      navigate(`/${type}`)
+      navigate(`/${game}/${type}`)
     }
   }, [builds])
 
@@ -53,7 +63,7 @@ export default function Contact() {
     .find(key => data.wzStatsTierList[type][key].includes(weapon))
   
   const onClose = () => {
-    navigate(`/${type}`)
+    navigate(`/${game}/${type}`)
   }
 
   return (

@@ -12,30 +12,52 @@ function removeDuplicates(array: Array<string>) {
 }
 
 const TierList = () => {
-  const { type, weapon } = useParams()
+  const [weaponFilter, setWeaponFilter] = useState('')
+  const { game, type, weapon } = useParams()
   const navigate = useNavigate()
-  const { data, attachments } = useLoaderData();
+  const { data, attachments } = useLoaderData()
 
   useEffect(() => {
     if (type && !weapon && window.innerWidth > 600) {
       const firstWeapon = data.wzStatsTierList[type].META[0]
-      navigate(`${type}/${firstWeapon}`)
+      navigate(`${game}/${type}/${firstWeapon}`)
     }
-  }, [weapon, type])
+  }, [game, weapon, type])
 
   const tier = data.wzStatsTierList[type]
   
   const [filter, setFilter] = useState('')
 
-  const filterMW3Ranked = (weapon) => {
+  const filterMW3Ranked = (weaponName) => {
     if (type !== 'mw3Ranked') return true
-    const builds = attachments.builds.filter((build) => build.weaponId === weapon && build.isMW3RankedBestBuild);
+    const builds = attachments.builds.filter((build) =>
+      build.weaponId === weaponName && build.isMW3RankedBestBuild);
     return builds.length > 0
   }
-  
+
+  const filterWeaponType = (weaponName) => {
+    const weaponInfo = data.weapons.find((item) => item.id === weaponName)
+    return !weaponFilter || weaponInfo.type === weaponFilter
+  }
+
   return (
     <div className="side__list" data-active={!!weapon}>
       <input value={filter} placeholder="Search..." onChange={(e) => setFilter(e.target.value)} />
+      <div>
+        <select value={weaponFilter} onChange={(e) => setWeaponFilter(e.target.value)}>
+          <option value="">
+            All
+          </option>
+          {Object
+            .entries(weaponTypes)
+            .sort((a, b) => a[0].localeCompare(b[0]))
+            .map(([key, type]) => (
+              <option key={type} value={key}>
+                {type}
+              </option>
+            ))}
+        </select>
+      </div>
       <div className="tier__list scrollbar">
         {_entries(tier)
           .map(([key2, value2]) => (
@@ -43,6 +65,7 @@ const TierList = () => {
               <h2>{key2}</h2>
               <nav className="weapons--side">
                 {removeDuplicates(value2)
+                  .filter(filterWeaponType)
                   .filter(value3 => !filter || value3.includes(filter))
                   .filter(filterMW3Ranked)
                   .map((value3) => (
@@ -61,13 +84,13 @@ const TierList = () => {
 
 
 const WeaponShort = ({ weapon }) => {
-  const { type, weapon: selectedWeapon } = useParams()
+  const { game, type, weapon: selectedWeapon } = useParams()
   const { data } = useLoaderData();
   const weaponInfo = data.weapons.find((item) => item.id === weapon)
 
   return (
     <NavLink
-      to={`${type}/${weapon}`}
+      to={`${game}/${type}/${weapon}`}
       className="weapon"
       data-selected={weapon === selectedWeapon}
       data-game={weaponInfo.game}

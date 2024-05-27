@@ -38,4 +38,8 @@ export const weaponTypes = {
   BATTLE_RIFLE: 'BR',
   MARKSMAN_RIFLE: 'MARKSMAN',
   SNIPER_RIFLE: 'SNIPER',
+  LMG: 'LMG',
+  SMG: 'SMG',
+  PISTOL: 'PISTOL',
+  SHOTGUN: 'SHOTGUN',
 }

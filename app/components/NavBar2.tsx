@@ -9,33 +9,45 @@ const games = {
 }
 
 const NavBar2 = () => {
-  const [game, setGame] = useState('WZ')
-  const { type, weapon } = useParams()
+  const { game = 'WZ', type, weapon } = useParams()
   const navigate = useNavigate()
 
   useEffect(() => {
+    if (!game || !games[game]) {
+      navigate('WZ')
+    } else if (!games[game].includes(type)) {
+      navigate(`${game}/${games[game][0]}/${weapon || ''}`)
+    }
+  }, [game])
+
+  useEffect(() => {
     if (!type) {
-      navigate('ashikaIsland')
+      navigate(`${game}/${games[game][0]}`)
     }
   }, [type])
-  
-  useEffect(() => {
-    if (!games[game].includes(type)) {
-      navigate(`${games[game][0]}/${weapon || ''}`)
-    }
-  }, [game, type])
+
 
   return (
     <div className="nav">
       <div className="nav__logo">
-        <img data-active={game === 'WZ'} src="/images/wz2-logo.webp" alt="wz-logo" onClick={() => setGame('WZ')} />
-        <img data-active={game === 'MW3'} src="/images/mw3-logo.webp" alt="wz-logo" onClick={() => setGame('MW3')} />
+        <NavLink
+          to={`WZ/${type}/${weapon || ''}`}
+          data-active={game === 'WZ'}
+        >
+          <img data-active={game === 'WZ'} src="/images/wz2-logo.webp" alt="wz-logo"  />
+        </NavLink>
+        <NavLink
+          to={`MW3/${type}/${weapon || ''}`}
+          data-active={game === 'MW3'}
+        >
+          <img data-active={game === 'MW3'} src="/images/mw3-logo.webp" alt="wz-logo" />
+        </NavLink>
       </div>
       <div className="tabs">
         {games[game]
-          .map((gameType) => (
+          ?.map((gameType) => (
             <NavLink
-              to={`${gameType}/${weapon || ''}`}
+              to={`${game}/${gameType}/${weapon || ''}`}
               key={gameType}
               className="tab"
               data-active={gameType === type}
