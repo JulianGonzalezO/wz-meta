@@ -6,7 +6,7 @@ export const fetchApi = async (url: string) => {
 
 const paramsMap = {
   "streamerProfileId": "wzstats",
-  "weaponGames": ["mw3", "mw2"],
+  "weaponGames": ["mw3", "mw2", "bo6"],
   weaponAttributes: [
     "game",
     "name",

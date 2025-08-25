@@ -2,6 +2,7 @@ import { NavLink, useLoaderData, useNavigate, useParams } from "@remix-run/react
 import { useEffect, useState } from "react";
 import './TierList.css'
 import { weaponTypes } from "~/lib/constants";
+import WeaponShort from "./WeaponShort";
 
 function _entries(object = {}) {
   return Object.entries(object)
@@ -83,32 +84,6 @@ const TierList = () => {
 }
 
 
-const WeaponShort = ({ weapon }) => {
-  const { game, type, weapon: selectedWeapon } = useParams()
-  const { data } = useLoaderData();
-  const weaponInfo = data.weapons.find((item) => item.id === weapon)
 
-  return (
-    <NavLink
-      to={`${game}/${type}/${weapon}`}
-      className="weapon"
-      data-selected={weapon === selectedWeapon}
-      data-game={weaponInfo.game}
-    >
-      <div className="weapon__title">
-        <img
-          alt={weapon}
-          src={`/images/${weapon}.png`}
-        />
-        <h3>{weaponInfo.name}</h3>
-        <h5>{weaponTypes[weaponInfo.type] || weaponInfo.type}</h5>
-        <img
-          alt={weaponInfo.game}
-          src={`/images/${weaponInfo.game}-logo.webp`}
-        />
-      </div>
-    </NavLink>
-  );
-}
 
 export default TierList

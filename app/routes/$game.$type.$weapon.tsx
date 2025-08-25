@@ -30,7 +30,7 @@ export default function Contact() {
   const { data, attachments } = useRouteLoaderData("root");
   const [isExpanded, setIsExpanded] = useState(true)
 
-  const weaponInfo = data.weapons.find((item) => item.id === weapon)
+  const weaponInfo = data.weapons.find((item) => item.id === weapon) || {}
   
   const sortMW3Multi = (a, b) => {
     if (!type.includes('mw3')) return 0
